@@ -10,98 +10,24 @@ library(DT)
 library(ggplot2)
 library(shinydashboard)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # Charger les données de consommation à partir d'un fichier CSV
 donnees_conso <- read_delim("C://Users//SLKSh//Downloads//consoelecgaz2024//consoelecgaz2024.csv", delim = "\t")
-
-
-
-
-
-
-
 
 # Remplacer les virgules par des points dans les colonnes concernées
 donnees_conso$`Conso totale (MWh)` <- gsub(",", ".", donnees_conso$`Conso totale (MWh)`)
 donnees_conso$`Conso moyenne (MWh)` <- gsub(",", ".", donnees_conso$`Conso moyenne (MWh)`)
 
-
-
-
-
-
-
-
 # Convertir les colonnes nécessaires en format numérique (si ce n'est pas déjà le cas)
 donnees_conso$`Conso totale (MWh)` <- as.numeric(donnees_conso$`Conso totale (MWh)`)
 donnees_conso$`Conso moyenne (MWh)` <- as.numeric(donnees_conso$`Conso moyenne (MWh)`)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # Renommer la colonne 'Code Département' pour correspondre à la colonne 'code' dans le shapefile
 donnees_conso <- donnees_conso %>% rename(code = `Code Département`)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 # Ajouter un zéro devant les départements à un seul chiffre (par exemple, 7 devient 07)
 donnees_conso$code <- ifelse(nchar(as.character(donnees_conso$code)) == 1,
                              paste0("0", donnees_conso$code),
                              as.character(donnees_conso$code))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 # Liste des fichiers GeoJSON pour les départements, incluant la France Métropolitaine et les départements d'Outre-mer
 departments_files <- list(
@@ -112,21 +38,6 @@ departments_files <- list(
   "Mayotte" = "https://github.com/marie-smk/tp/raw/main/departement-976-mayotte.geojson",
   "France Métropolitaine" = "https://github.com/marie-smk/tp/raw/main/contour-des-departements.geojson"
 )
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 # Interface utilisateur avec shinydashboard
 ui <- dashboardPage(
@@ -245,20 +156,6 @@ ui <- dashboardPage(
     )
   )
 )
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 # Serveur
@@ -418,83 +315,5 @@ server <- function(input, output, session) {
   })
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # Lancement de l'application
 shinyApp(ui = ui, server = server)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
